@@ -107,6 +107,14 @@
     width: 30px;
 }
 
+.voting-widget > .upvote .thumb-icon-outer {
+    margin-top: -1px;
+}
+
+.voting-widget > .downvote .thumb-icon-outer {
+    margin-top: 1px;
+}
+
 .voting-widget > .upvote {
     float: left;
 }
