@@ -5,7 +5,7 @@
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
     padding: 4px 8px;
     margin: 15px;
-    width: 106px;
+    width: 108px;
     border-radius: 7%/12%;
     text-align: center;
 }
@@ -53,7 +53,7 @@
 }
 
 .voting-widget.layout-vertical {
-    width: 64px;
+    width: 66px;
     border-radius: 11%/8%;
 }
 
