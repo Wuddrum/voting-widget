@@ -1,0 +1,259 @@
+.voting-widget {
+    position: absolute;
+    display: block;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+    padding: 4px 8px;
+    margin: 15px;
+    width: 128px;
+    border-radius: 7%/12%;
+    text-align: center;
+}
+
+.voting-widget.hidden {
+    display: none;
+}
+
+.voting-widget.horizontal-outside.left {
+    right: 100%;
+}
+
+.voting-widget.horizontal-inside.left {
+    left: 0;
+}
+
+.voting-widget.horizontal-outside.right {
+    left: 100%;
+}
+
+.voting-widget.horizontal-inside.right {
+    right: 0;
+}
+
+.voting-widget.vertical-outside.top {
+    bottom: 100%;
+}
+
+.voting-widget.vertical-inside.top {
+    top: 0;
+}
+
+.voting-widget.middle {
+    top: 50%;
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+}
+
+.voting-widget.vertical-outside.bottom {
+    top: 100%;
+}
+
+.voting-widget.vertical-inside.bottom {
+    bottom: 0;
+}
+
+.voting-widget.layout-vertical {
+    width: 78px;
+    border-radius: 11%/8%;
+}
+
+.voting-widget.layout-vertical > .upvote,
+.voting-widget.layout-vertical > .downvote {
+    float: none;
+    margin: 2px auto;
+}
+
+.voting-widget.layout-vertical > .downvote {
+    display: block;
+}
+
+.voting-widget p {
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.voting-widget > .title {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #4a4a4a;
+}
+
+.voting-widget .thumb-icon-outer {
+    display: block;
+    position: absolute;
+    width: 24px;
+    height: 23px;
+    top: 50%; 
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.voting-widget .thumb-icon-inner {
+    width: 24px;
+    height: 23px;
+}
+
+.voting-widget > .upvote,
+.voting-widget > .downvote {
+    display: inline-block;
+    margin-top: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+    text-align: center;
+    width: 45px;
+}
+
+.voting-widget > .upvote .thumb-icon-outer {
+    margin-top: -1px;
+}
+
+.voting-widget > .downvote .thumb-icon-outer {
+    margin-top: 1px;
+}
+
+.voting-widget > .upvote {
+    float: left;
+}
+
+.voting-widget > .downvote {
+    float: right;
+}
+
+.voting-widget > .downvote > .thumb-button > .thumb-icon-outer {
+    -ms-transform: translate(-50%, -50%) rotate(180deg);
+    transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.voting-widget .thumb-button {
+    position: relative;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #f9f8fc;
+}
+
+.voting-widget .thumb-text {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.voting-widget .thumb-icon-outer.white .thumb-part1,
+.voting-widget .thumb-icon-outer.white .thumb-part2 {
+    stroke: #fff;
+}
+
+.voting-widget .thumb-button > .green-circle,
+.voting-widget .thumb-button > .red-circle,
+.voting-widget .stars,
+.voting-widget .lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.voting-widget .lines {
+    width: 18px;
+    height: 18px;
+    top: 0;
+    left: 50%;
+    transform: translate(-60%, -10%);
+}
+
+.voting-widget .thumb-button > .green-circle {
+    background-color: #5bbf30;
+}
+
+.voting-widget .thumb-button > .red-circle {
+    background-color: #e12138;
+}
+
+.voting-widget .green-circle,
+.voting-widget .red-circle,
+.voting-widget .thumb-icon-outer.white .thumb-icon-inner,
+.voting-widget .stars,
+.voting-widget .lines {
+    opacity: 0;
+}
+
+.voting-widget .green-circle {
+    transition: all 0.3s ease-in-out;
+}
+
+.voting-widget .upvote .thumb-icon-outer.white .thumb-icon-inner,
+.voting-widget .stars {
+    transform: scale(0.5, 0.5) rotate(0deg);
+}
+
+.voting-widget.upvoted .green-circle {
+    animation: upvote-green-circle 0.3s ease-in forwards;
+}
+
+.voting-widget.upvoted .upvote .thumb-icon-outer.white .thumb-icon-inner {
+    animation: upvote-white-thumb 0.42s ease-in-out forwards;
+}
+
+.voting-widget.upvoted .stars {
+    animation: upvote-stars 0.58s ease-in-out forwards;
+}
+
+.voting-widget.upvoted .lines {
+    animation: upvote-lines 0.64s ease-in-out forwards;
+}
+
+.voting-widget.downvoted .red-circle {
+    animation: downvote-red-circle 0.3s ease-in forwards;
+}
+
+.voting-widget.downvoted .downvote .thumb-icon-outer.white .thumb-icon-inner {
+    animation: downvote-white-thumb 0.52s ease-in-out forwards;
+}
+
+@keyframes upvote-green-circle {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes upvote-white-thumb {
+    0% { transform: rotate(0deg) scale(0.5, 0.5); opacity: 0; }
+    6% { opacity: 0; }
+    30% { transform: rotate(-20deg) scale(0.64, 0.64); }
+    74% { opacity: 1; }
+    96% { transform: rotate(0deg) scale(0.96, 0.96); }
+    100% { transform: rotate(0deg) scale(1, 1); opacity: 1; }
+}
+
+@keyframes upvote-stars {
+    0% { transform: scale(0.25, 0.25); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: scale(1.25, 1.25); opacity: 0; }
+}
+
+@keyframes upvote-lines {
+    0% { opacity: 0; }
+    39% { opacity: 0; }
+    58% { opacity: 0.5; }
+    100% { opacity: 0; }
+}
+
+@keyframes downvote-red-circle {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes downvote-white-thumb {
+    0% { transform: translate(0, 0); opacity: 0; }
+    17% { opacity: 0; }
+    31% { transform: translate(0, 0); }
+    63% { transform: translate(0, -10%); }
+    67% { transform: translate(0, -10%); opacity: 1; }
+    100% { transform: translate(0, 0%); opacity: 1; }
+}

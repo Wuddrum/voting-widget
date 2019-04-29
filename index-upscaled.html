@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Voting Widget Demo</title>
+    <link rel="stylesheet" href="voting-widget-upscaled.css">
+    <script src="voting-widget-upscaled.js"></script>
+
+    <style>
+        #container {
+            position: relative;
+            width: 960px;
+            height: 78vh;
+            margin: 0 auto;
+            margin-top: 100px;
+            background-color: #efefef;
+            text-align: center;
+        }
+
+        .txt {
+            font-size: 16;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+
+        .row {
+            padding: 12px 0;
+        }
+
+        .row > div:nth-child(2) {
+            margin-top: 4px;
+        }
+
+        button:not(:nth-child(1)) {
+            margin-left: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="row">
+            <div class="txt">State:</div>
+            <div><button id="stateUpvoted">Upvoted</button><button id="stateNeutral">Neutral</button><button id="stateDownvoted">Downvoted</button></div>
+        </div>
+        <div class="row">
+            <div class="txt">Horizontal Position:</div>
+            <div><button id="horizontalPosLeft">Left</button><button id="horizontalPosRight">Right</button></div>
+        </div>
+        <div class="row">
+            <div class="txt">Vertical Position:</div>
+            <div><button id="verticalPosTop">Top</button><button id="verticalPosMiddle">Middle</button><button id="verticalPosBottom">Bottom</button></div>
+        </div>
+        <div class="row">
+            <div class="txt">Horizontal Anchor:</div>
+            <div><button id="horizontalAnchorInside">Inside</button><button id="horizontalAnchorOutside">Outside</button></div>
+        </div>
+        <div class="row">
+            <div class="txt">Vertical Anchor:</div>
+            <div><button id="verticalAnchorInside">Inside</button><button id="verticalAnchorOutside">Outside</button></div>
+        </div>
+        <div class="row">
+            <div class="txt">Layout:</div>
+            <div><button id="layoutHorizontal">Horizontal</button><button id="layoutVertical">Vertical</button></div>
+        </div>
+        <div class="row">
+            <div class="txt">Visibility:</div>
+            <div><button id="setVisible">Visible</button><button id="setHidden">Hidden</button></div>
+        </div>
+        <div class="row">
+            <div class="txt">Container Element:</div>
+            <div><button id="containerElContainer">#container</button><button id="containerElBody">document.body</button></div>
+        </div>
+        <div class="row">
+            <div class="txt">State Log:</div>
+            <div><textarea id="stateLog" cols="75" rows="7"></textarea></div>
+        </div>
+    </div>
+    <script>
+        var widget = new VotingWidget({ 
+            id: 'widgetDemo',
+            containerElement: document.getElementById('container'),
+            stateChangedCallback: onStateChanged
+        });
+        widget.show();
+
+        function onStateChanged(data) {
+            var stateLogEl = document.getElementById('stateLog');
+            stateLogEl.value += 'Widget state changed to: ' + data.state + ', element id: ' + data.widget.options.id + '\n';
+            stateLogEl.scrollTop = stateLogEl.scrollHeight;
+        }
+
+        document.getElementById('stateUpvoted').addEventListener('click', function() {
+            widget.options.state = VoteState.Upvoted;
+        });
+
+        document.getElementById('stateNeutral').addEventListener('click', function() {
+            widget.options.state = VoteState.Neutral;
+        });
+
+        document.getElementById('stateDownvoted').addEventListener('click', function() {
+            widget.options.state = VoteState.Downvoted;
+        });
+
+        document.getElementById('horizontalPosLeft').addEventListener('click', function() {
+            widget.options.horizontalPosition = HorizontalPosition.Left;
+        });
+
+        document.getElementById('horizontalPosRight').addEventListener('click', function() {
+            widget.options.horizontalPosition = HorizontalPosition.Right;
+        });
+
+        document.getElementById('verticalPosTop').addEventListener('click', function() {
+            widget.options.verticalPosition = VerticalPosition.Top;
+        });
+
+        document.getElementById('verticalPosMiddle').addEventListener('click', function() {
+            widget.options.verticalPosition = VerticalPosition.Middle;
+        });
+
+        document.getElementById('verticalPosBottom').addEventListener('click', function() {
+            widget.options.verticalPosition = VerticalPosition.Bottom;
+        });
+
+        document.getElementById('horizontalAnchorInside').addEventListener('click', function() {
+            widget.options.horizontalAnchor = HorizontalAnchor.Inside;
+        });
+
+        document.getElementById('horizontalAnchorOutside').addEventListener('click', function() {
+            widget.options.horizontalAnchor = HorizontalAnchor.Outside;
+        });
+
+        document.getElementById('verticalAnchorInside').addEventListener('click', function() {
+            widget.options.verticalAnchor = VerticalAnchor.Inside;
+        });
+
+        document.getElementById('verticalAnchorOutside').addEventListener('click', function() {
+            widget.options.verticalAnchor = VerticalAnchor.Outside;
+        });
+
+        document.getElementById('layoutHorizontal').addEventListener('click', function() {
+            widget.options.layout = Layout.Horizontal;
+        });
+
+        document.getElementById('layoutVertical').addEventListener('click', function() {
+            widget.options.layout = Layout.Vertical;
+        });
+
+        document.getElementById('setVisible').addEventListener('click', function() {
+            widget.show();
+        });
+
+        document.getElementById('setHidden').addEventListener('click', function() {
+            widget.hide();
+        });
+
+        document.getElementById('containerElContainer').addEventListener('click', function() {
+            widget.options.containerElement = document.getElementById('container');
+        });
+
+        document.getElementById('containerElBody').addEventListener('click', function() {
+            widget.options.containerElement = document.body;
+        });
+    </script>
+</body>
+</html>
