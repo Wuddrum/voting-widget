@@ -65,6 +65,10 @@
             <div><button id="layoutHorizontal">Horizontal</button><button id="layoutVertical">Vertical</button></div>
         </div>
         <div class="row">
+            <div class="txt">Floating:</div>
+            <div><button id="floatingTrue">True</button><button id="floatingFalse">False</button></div>
+        </div>
+        <div class="row">
             <div class="txt">Visibility:</div>
             <div><button id="setVisible">Visible</button><button id="setHidden">Hidden</button></div>
         </div>
@@ -161,6 +165,18 @@
 
         document.getElementById('containerElBody').addEventListener('click', function() {
             widget.options.containerElement = document.body;
+        });
+
+        document.getElementById('floatingTrue').addEventListener('click', function() {
+            widget.options.floating = true;
+            document.getElementById('container').setAttribute('style', 'height: 1600px;');
+            document.body.setAttribute('style', 'height: 3000px;');
+        });
+
+        document.getElementById('floatingFalse').addEventListener('click', function() {
+            widget.options.floating = false;
+            document.getElementById('container').setAttribute('style', '');
+            document.body.setAttribute('style', '');
         });
     </script>
 </body>

@@ -4,6 +4,7 @@ function VotingWidget(options) {
     var LINES_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 9.44 4.38"><defs><style>.d{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.5px;}</style></defs><title>Lines2</title><path class="d" d="M1.59,4.13.25,3.23"/><path class="d" d="M4.14,3.29,2.59,1.62"/><path class="d" d="M6.07,3.11V.25"/><path class="d" d="M8,3.32l1.17-1.7"/></svg>';
 
     var that = this;
+    var margin = 15;
     options = options || {};
     var id = options.id || '';
     var horizontalPosition = options.horizontalPosition || HorizontalPosition.Left;
@@ -12,9 +13,11 @@ function VotingWidget(options) {
     var verticalAnchor = options.verticalAnchor || VerticalAnchor.Inside;
     var layout = options.layout || Layout.Horizontal;
     var containerEl = options.containerElement || document.body;
+    var floating = options.floating || false;
     var stateChangedCallback = options.stateChangedCallback || null;
     var state = null;
     var widgetEl = createAndInsertWidget();
+    var debouncedFloatWidgetFunc = debounce(100, floatWidget);
     setState(options.state || VoteState.Neutral, false);
 
     this.options = {};
@@ -57,6 +60,10 @@ function VotingWidget(options) {
             verticalPosition = value;
             removeVerticalPositionClasses();
             widgetEl.classList.add(getVerticalPositionClass(value));
+
+            if (floating) {
+                floatWidget();
+            }
         }
     });
 
@@ -112,6 +119,29 @@ function VotingWidget(options) {
         }
     });
 
+    Object.defineProperty(this.options, 'floating', {
+        get: function() {
+            return floating;
+        },
+        set: function(value) {
+            if (floating === value) {
+                return;
+            }
+
+            floating = value;
+
+            if (value) {
+                widgetEl.classList.add('floating');
+                floatWidget();
+                document.addEventListener('scroll', debouncedFloatWidgetFunc);
+            }
+            else {
+                clearFloatingStyles();
+                document.removeEventListener('scroll', debouncedFloatWidgetFunc);
+            }
+        }
+    });
+
     this.show = function() {
         widgetEl.classList.remove('hidden');
     }
@@ -131,6 +161,10 @@ function VotingWidget(options) {
         widgetEl.appendChild(downvoteEl);
         containerEl.appendChild(widgetEl);
 
+        if (floating) {
+            document.addEventListener('scroll', debouncedFloatWidgetFunc);
+        }
+
         return widgetEl;
     }
 
@@ -146,6 +180,10 @@ function VotingWidget(options) {
         widgetEl.classList.add(getVerticalPositionClass());
         widgetEl.classList.add(getHorizontalAnchorClass());
         widgetEl.classList.add(getVerticalAnchorClass());
+
+        if (floating) {
+            widgetEl.classList.add('floating');
+        }
 
         return widgetEl;
     }
@@ -363,6 +401,55 @@ function VotingWidget(options) {
             widget: that,
             widgetEl: widgetEl
         });
+    }
+
+    function floatWidget() {
+        var containerRect = containerEl.getBoundingClientRect();
+        var widgetRect = widgetEl.getBoundingClientRect();
+        var desiredWidgetY = 0;
+
+        switch (verticalPosition) {
+            case VerticalPosition.Top:
+                desiredWidgetY = 0;
+                break;
+            case VerticalPosition.Middle:
+                desiredWidgetY = (window.innerHeight / 2) - (widgetRect.height / 2) - margin;
+                break;
+            case VerticalPosition.Bottom:
+                desiredWidgetY = window.innerHeight - widgetRect.height - margin * 2;
+                break;
+        }
+
+        if (containerRect.bottom < desiredWidgetY + widgetRect.height + margin * 2) {
+            widgetEl.setAttribute('style', 'top: 0; bottom: auto; transform: translate(0, ' + (containerRect.height - widgetRect.height - margin * 2) + 'px);');
+            return;
+        }
+
+        if (containerRect.top < desiredWidgetY) {
+            widgetEl.setAttribute('style', 'top: 0; bottom: auto; transform: translate(0, ' + (desiredWidgetY - containerRect.top) + 'px);');
+            return;
+        }
+
+        widgetEl.setAttribute('style', 'top: 0; bottom: auto; transform: translate(0, 0);');
+    }
+
+    function clearFloatingStyles() {
+        widgetEl.setAttribute('style', '');
+        widgetEl.classList.remove('floating');
+    }
+
+    function debounce(interval, func) {
+        var timer;
+        return function() {
+            if (timer) {
+                clearTimeout(timer);
+            }
+
+            timer = setTimeout(function() {
+                timer = null;
+                func();
+            }, interval);
+        }
     }
 
     function onClickUpvote() {

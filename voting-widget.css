@@ -52,6 +52,10 @@
     bottom: 0;
 }
 
+.voting-widget.floating {
+    transition: transform 0.2s ease-out;
+}
+
 .voting-widget.layout-vertical {
     width: 66px;
     border-radius: 11%/8%;
