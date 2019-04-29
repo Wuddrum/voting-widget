@@ -84,8 +84,8 @@
 .voting-widget .thumb-icon-outer {
     display: block;
     position: absolute;
-    width: 24px;
-    height: 23px;
+    width: 26px;
+    height: 25px;
     top: 50%; 
     left: 50%;
     -ms-transform: translate(-50%, -50%);
@@ -93,8 +93,8 @@
 }
 
 .voting-widget .thumb-icon-inner {
-    width: 24px;
-    height: 23px;
+    width: 26px;
+    height: 25px;
 }
 
 .voting-widget > .upvote,
